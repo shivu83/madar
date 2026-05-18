@@ -1,0 +1,37 @@
+4 To apply the Find-S and Candidate Elimination algorithms to 
+a concept learning task and compare their inductive biases and 
+outputs. 
+ 
+# 1. Load dataset (Attendance, Internal Marks, Eligibility) 
+dataset = [['High', 'Good', 'Yes'], ['High', 'Poor', 'No'], ['Low', 'Good', 
+'No'], ['High', 'Good', 'Yes']] 
+ 
+# 2. Separate attributes and target labels 
+X, Y = [d[:-1] for d in dataset], [d[-1] for d in dataset] 
+ 
+# 3. Initialize most specific hypothesis (S) and general (G) 
+S = X[0][:] 
+G = [['?'] * len(S)] 
+ 
+# 4. Read training examples 
+for i in range(len(X)): 
+    # 5. For positive examples: generalize hypothesis S, remove 
+inconsistent G 
+    if Y[i] == 'Yes': 
+        S = [S[j] if S[j] == X[i][j] else '?' for j in range(len(S))] 
+        G = [g for g in G if all(g[k] == '?' or g[k] == X[i][k] for k in 
+range(len(S)))] 
+         
+    # 6. For negative examples: update/specialize boundaries of G 
+    else: 
+        new_G = [] 
+        for g in G: 
+            for j in range(len(S)): 
+                if g[j] == '?' and S[j] != '?' and S[j] != X[i][j]: 
+                    new_G.append(g[:j] + [S[j]] + g[j+1:]) 
+        G = new_G 
+  
+print(f"Find-S Hypothesis: {S} \n") 
+print("Candidate Elimination  Hypothesis ") 
+print("Final Specific Hypothesis (S):", S) 
+print("Final General Hypothesis (G):", G) 

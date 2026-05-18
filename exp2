@@ -1,0 +1,12 @@
+def get_inversion_parity(state): 
+   tiles = [tile for tile in state if tile != 0] 
+   inversions = sum(1 for i in range(len(tiles)) for j in range(i + 1, len(tiles)) if tiles[i] > tiles[j]) 
+   return inversions % 2 
+def is_reachable(state1, state2): 
+   return get_inversion_parity(state1) == get_inversion_parity(state2) 
+state_A = [int(x) for x in input("Enter State A separated by spaces (e.g., 1 2 3 4 5 6 7 8 0): ").split()] 
+state_B = [int(x) for x in input("Enter State B separated by spaces: ").split()] 
+if is_reachable(state_A, state_B): 
+   print("\nResult: TRUE - They are in the SAME disjoint set (reachable from one another).") 
+else: 
+   print("\nResult: FALSE - They are in DIFFERENT disjoint sets (impossible to reach).") 

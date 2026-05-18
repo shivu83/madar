@@ -1,3 +1,4 @@
+#2 Show that the 8-puzzle states are divided into two disjoint sets, such that any state is reachable from any other state in the same set, while no state is reachable from any state in the other set. 
 def get_inversion_parity(state): 
    tiles = [tile for tile in state if tile != 0] 
    inversions = sum(1 for i in range(len(tiles)) for j in range(i + 1, len(tiles)) if tiles[i] > tiles[j]) 

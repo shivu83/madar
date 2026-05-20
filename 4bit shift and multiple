@@ -1,0 +1,75 @@
+4 BIT SHIFT ADD
+
+`timescale 1ns/1ps//Define time unit and presicion
+
+       module shiftadd (input [3:0] a,input [3:0] b,output [7:0] product);
+
+       reg [7:0] prod_reg;
+
+       reg [3:0] count;
+
+       integer i;always @* begin
+
+       prod_reg=8'b0;
+
+       for(i=0;i<4;i=i+1)begin
+
+       if(b[i]==1'b1)begin
+
+       prod_reg=prod_reg+(a<<i);
+
+       end
+
+       end
+
+       end
+
+       assign product=prod_reg;
+
+       endmodule
+part B
+       `timescale 1ns/1ps//Define time unit and precision
+        module tbshiftadd;
+
+        reg [3:0] a_tb;
+
+        reg [3:0] b_tb;
+
+        wire [7:0] product_tb;
+
+        shiftadd dut(.a(a_tb), .b(b_tb), .product(product_tb));
+
+        initial begin
+
+        $display("Time\t a\t b\t | product(Binary) | product(Decimal)");
+
+        $display("----------------------------------------------------------------");
+
+//Test cases
+
+a_tb=4'b0000;b_tb=4'b0000;#10;
+
+       $display("%0dns:\t %b\t %b\t | %b\t | %0d",$time,a_tb,b_tb,product_tb,product_tb);
+
+a_tb=4'b0001;b_tb=4'b0001;#10;
+
+       $display("%0dns:\t %b\t %b\t | %b\t | %0d",$time,a_tb,b_tb,product_tb,product_tb);
+
+a_tb=4'b0010;b_tb=4'b0011;#10;
+
+       $display("%0dns:\t %b\t %b\t | %b\t | %0d",$time,a_tb,b_tb,product_tb,product_tb);
+
+a_tb=4'b1010;b_tb=4'b0011;#10;
+
+       $display("%0dns:\t %b\t %b\t | %b\t | %0d",$time,a_tb,b_tb,product_tb,product_tb);
+
+a_tb=4'b1101;b_tb=4'b0011;#10;
+
+       $display("%0dns:\t %b\t %b\t | %b\t | %0d",$time,a_tb,b_tb,product_tb,product_tb);
+
+//End simulation
+
+      #10;
+
+      $stop; 
+      end endmodule

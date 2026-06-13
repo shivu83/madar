@@ -1,0 +1,26 @@
+def inv(s):
+    s = [x for x in s if x != 0]  # Remove blank tile (0)
+    c = 0
+
+    for i in range(len(s)):
+        for j in range(i + 1, len(s)):
+            if s[i] > s[j]:
+                c += 1
+
+    return c
+
+
+s1 = list(map(int, input("State 1: ").split()))
+s2 = list(map(int, input("State 2: ").split()))
+
+i1, i2 = inv(s1), inv(s2)
+
+print("State 1 Inversions:", i1)
+print("State 2 Inversions:", i2)
+
+if i1 % 2 == i2 % 2:
+    print("Both states are in the SAME set")
+    print("and are reachable from each other.")
+else:
+    print("The states are in DIFFERENT sets")
+    print("and are NOT reachable.")

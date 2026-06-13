@@ -1,0 +1,45 @@
+d = [
+    ['High', 'Complete', 'Yes'],
+    ['Low', 'Complete', 'No'],
+    ['High', 'Incomplete', 'Yes'],
+    ['High', 'Complete', 'Yes']
+]
+
+print("FIND-S ALGORITHM")
+
+h = ['0', '0']
+
+for x in d:
+    if x[-1] == 'Yes':
+        for i in range(2):
+            if h[i] == '0':
+                h[i] = x[i]
+            elif h[i] != x[i]:
+                h[i] = '?'
+
+print("Final Hypothesis :", h)
+
+print("\nCANDIDATE ELIMINATION")
+
+S = ['0', '0']
+G = ['?', '?']
+
+for x in d:
+    if x[-1] == 'Yes':
+        for i in range(2):
+            if S[i] == '0':
+                S[i] = x[i]
+            elif S[i] != x[i]:
+                S[i] = '?'
+    else:
+        for i in range(2):
+            if x[i] != S[i]:
+                G[i] = S[i]
+
+print("Specific Boundary S :", S)
+print("General Boundary G :", G)
+
+print("\nINDUCTIVE BIAS")
+print("Find-S learns the most specific concept.")
+print("Candidate Elimination keeps both")
+print("specific and general boundaries.")

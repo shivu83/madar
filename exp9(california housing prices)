@@ -1,0 +1,48 @@
+import numpy as np
+
+X = np.array([
+    [8.3, 41, 6.9],
+    [8.3, 21, 6.2],
+    [7.2, 52, 8.2],
+    [5.6, 52, 5.8],
+    [3.8, 52, 6.2],
+    [4.0, 52, 4.7],
+    [3.6, 52, 4.9],
+    [3.1, 52, 4.7],
+    [2.0, 42, 4.2],
+    [3.6, 52, 4.9]
+])
+
+y = np.array([4.5, 3.5, 3.5, 3.4, 3.4, 2.6, 2.9, 2.4, 2.2, 2.6])
+
+# Train-Test Split
+tx, vx = X[:8], X[8:]
+ty, vy = y[:8], y[8:]
+
+# Feature Scaling
+m, s = tx.mean(axis=0), tx.std(axis=0)
+tx = (tx - m) / s
+vx = (vx - m) / s
+
+# Add Bias Term
+tx = np.c_[np.ones(len(tx)), tx]
+vx = np.c_[np.ones(len(vx)), vx]
+
+# Normal Equation
+theta = np.linalg.inv(tx.T @ tx) @ tx.T @ ty
+
+# Predictions
+pred = vx @ theta
+
+# Error Metrics
+mse = np.mean((vy - pred) ** 2)
+
+print("Predictions\n")
+
+for i in range(len(pred)):
+    print("Actual    :", vy[i])
+    print("Predicted :", round(pred[i], 2))
+    print()
+
+print("MSE  =", round(mse, 2))
+print("RMSE =", round(np.sqrt(mse), 2))

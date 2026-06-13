@@ -1,0 +1,65 @@
+d = [
+    ['Youth', 'High', 'No', 'Fair', 'No'],
+    ['Youth', 'High', 'No', 'Excellent', 'No'],
+    ['Middle', 'High', 'No', 'Fair', 'Yes'],
+    ['Senior', 'Medium', 'No', 'Fair', 'Yes'],
+    ['Senior', 'Low', 'Yes', 'Fair', 'Yes'],
+    ['Senior', 'Low', 'Yes', 'Excellent', 'No'],
+    ['Middle', 'Low', 'Yes', 'Excellent', 'Yes'],
+    ['Youth', 'Medium', 'No', 'Fair', 'No'],
+    ['Youth', 'Low', 'Yes', 'Fair', 'Yes'],
+    ['Senior', 'Medium', 'Yes', 'Fair', 'Yes']
+]
+
+def find_s(d):
+    h = ['0'] * 4
+    print("Initial Hypothesis:\n", h)
+
+    for x in d:
+        if x[-1] == 'Yes':
+            for i in range(4):
+                if h[i] == '0':
+                    h[i] = x[i]
+                elif h[i] != x[i]:
+                    h[i] = '?'
+
+    return h
+
+
+def ce(d):
+    S = ['0'] * 4
+    G = [['?'] * 4]
+
+    print("\nInitial Specific Hypothesis:\n", S)
+    print("\nInitial General Hypothesis:\n", G)
+
+    for x in d:
+        a, t = x[:-1], x[-1]
+
+        if t == 'Yes':
+            for i in range(4):
+                if S[i] == '0':
+                    S[i] = a[i]
+                elif S[i] != a[i]:
+                    S[i] = '?'
+        else:
+            G = [[S[i] if a[i] != S[i] else '?' for i in range(4)]]
+
+    return S, G
+
+
+print("===== FIND-S ALGORITHM =====")
+h = find_s(d)
+
+print("\nFinal Hypothesis from Find-S:")
+print(h)
+
+print("\n===== CANDIDATE ELIMINATION ALGORITHM =====")
+S, G = ce(d)
+
+print("\nFinal Specific Hypothesis:")
+print(S)
+
+print("\nFinal General Hypothesis:")
+for i in G:
+    print(i)
